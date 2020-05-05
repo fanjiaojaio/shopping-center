@@ -1,21 +1,21 @@
 <template>
   <div id="app">
     <router-view/>
-    <main-tab-bar/>
+    <tab-footer></tab-footer>
   </div>
 </template>
 
 <script>
- import MainTabBar from 'components/content/mainTabbar/MainTabBar'
-
+import TabFooter from '@/components/common/TabFooter.vue'
 export default {
-  name: 'App',
-  components: {
-   MainTabBar
-  }
+    name:'App',
+    components:{
+        TabFooter
+    }
 }
 </script>
 
-<style>
-  @import "assets/css/base.css";
+<style lang="less">
+// @import "./assets/css/base.css";
+    
 </style>

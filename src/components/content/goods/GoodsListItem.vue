@@ -1,74 +1,66 @@
 <template>
-  <div class="goods-item">
-    <img :src="goodsItem.show.img" alt="">
-    <div class="goods-info">
-      <p>{{goodsItem.title}}</p>
-      <span class="price">{{goodsItem.price}}</span>
-      <span class="collect">{{goodsItem.cfav}}</span>
+    <div class="goods_list_item" @click="itemDetail">
+        <img v-lazy="showImg" @load="imgLoad"/>
+        <p>{{ goodsItem.title }}</p>
+        <div class="price">
+            <p class="price_goods">{{ goodsItem.price }}</p>
+            <p><van-icon name="star" />{{ goodsItem.cfav }}</p>
+        </div>
     </div>
-  </div>
 </template>
-
 <script>
-  export default {
-    name: "GoodsListItem",
-    props: {
-      goodsItem: {
-        type: Object,
-        default() {
-          return {}
+export default {
+    name:'GoodsListItem',
+    props:{
+        goodsItem:{
+            type:Object,
+            default() {
+                return {}
+            }
         }
-      }
-    }
-  }
+    },
+    methods:{
+        itemDetail() {
+            this.$router.push(`/detail/${this.goodsItem.iid}`)
+        },
+        imgLoad() {
+            // console.log("a")
+            this.$bus.$emit("itemImgLoad")
+        },
+    },
+    computed: {
+        showImg() {
+            return this.goodsItem.image || this.goodsItem.show.img
+        }
+    },
+}
 </script>
-
-<style scoped>
-  .goods-item {
-    padding-bottom: 40px;
-    position: relative;
-
-    width: 48%;
-  }
-
-  .goods-item img {
-    width: 100%;
-    border-radius: 5px;
-  }
-
-  .goods-info {
-    font-size: 12px;
-    position: absolute;
-    bottom: 5px;
-    left: 0;
-    right: 0;
-    overflow: hidden;
-    text-align: center;
-  }
-
-  .goods-info p {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    margin-bottom: 3px;
-  }
-
-  .goods-info .price {
-    color: var(--color-high-text);
-    margin-right: 20px;
-  }
-
-  .goods-info .collect {
-    position: relative;
-  }
-
-  .goods-info .collect::before {
-    content: '';
-    position: absolute;
-    left: -15px;
-    top: -1px;
-    width: 14px;
-    height: 14px;
-    background: url("~assets/img/common/collect.svg") 0 0/14px 14px;
-  }
+<style lang="less" scoped>
+    .goods_list_item{
+        display: flex;
+        width: 46vw;
+        flex-direction: column;
+        padding: 0 2vw;
+        img{
+            width: 100%;
+            border-radius: 0.1rem;
+        }
+        p{
+            display: -webkit-box;  //超出文字部分用... 表示
+            overflow: hidden;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 1;
+            font-size: 0.24rem;
+            padding:0 0.08rem;
+            margin-top: 0.1rem;
+        }
+        .price{
+            display: flex;
+            justify-content: center;
+            margin: -0.1rem 0rem 0.1rem 0rem;
+            .price_goods{
+                color: #EF232F;
+            }
+        }
+    }
 </style>

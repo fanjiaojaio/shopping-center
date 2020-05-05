@@ -1,34 +1,40 @@
-
 <template>
-   <swiper>
-      <swiper-item v-for="item in banners" :key="item.id">
-          <a :href="item.link">
-            <img :src="item.image">
-          </a>
-      </swiper-item>
-    </swiper>
+    <div>
+        <van-swipe class="my-swipe" :autoplay="2000" indicator-color="white">
+            <van-swipe-item v-for="(item,index) in banner" :key="index">
+                <img :src="item.image"/>
+            </van-swipe-item>
+        </van-swipe>
+     
+    </div>
 </template>
 
 <script>
-import {Swiper,SwiperItem} from 'components/common/swiper'
-
-  export default {
-    name: "HomeSwiper",
+export default {
+    name:'HomeSwiper',
     props:{
-        banners:{
+        banner:{
             type:Array,
-            default(){
-                return[]
+            default() {
+                return []
             }
         }
-    },
-    components:{
-        Swiper,
-        SwiperItem
     }
-  }
+}
 </script>
 
-<style scoped>
-
+<style lang="less" scoped>
+    .van-swipe{
+        margin-top: 46px;
+        width: 100vw;
+        height: 3.9rem;
+        .van-swipe-item{
+            width: 100%;
+            height: 100%;
+            img{
+                width:100%;
+                height: 100%;
+            }
+        }
+    }
 </style>

@@ -1,130 +1,42 @@
 <template>
-<div class="wrapper">
-     <ul>
-    <li>分类列表1</li>
-    <li>分类列表2</li>
-    <li>分类列表3</li>
-    <li>分类列表4</li>
-    <li>分类列表5</li>
-    <li>分类列表6</li>
-    <li>分类列表7</li>
-    <li>分类列表8</li>
-    <li>分类列表9</li>
-    <li>分类列表10</li>
-    <li>分类列表</li>
-    <li>分类列表</li>
-    <li>分类列表</li>
-    <li>分类列表</li>
-    <li>分类列表</li>
-    <li>分类列表</li>
-    <li>分类列表</li>
-    <li>分类列表</li>
-    <li>分类列表</li>
-    <li>分类列表</li>
-    <li>分类列表1</li>
-    <li>分类列表2</li>
-    <li>分类列表3</li>
-    <li>分类列表4</li>
-    <li>分类列表5</li>
-    <li>分类列表6</li>
-    <li>分类列表7</li>
-    <li>分类列表8</li>
-    <li>分类列表9</li>
-    <li>分类列表10</li>
-    <li>分类列表11</li>
-    <li>分类列表12</li>
-    <li>分类列表13</li>
-    <li>分类列表14</li>
-    <li>分类列表15</li>
-    <li>分类列表16</li>
-    <li>分类列表17</li>
-    <li>分类列表18</li>
-    <li>分类列表19</li>
-    <li>分类列表20</li>
-    <li>分类列表21</li>
-    <li>分类列表22</li>
-    <li>分类列表23</li>
-    <li>分类列表24</li>
-    <li>分类列表25</li>
-    <li>分类列表26</li>
-    <li>分类列表27</li>
-    <li>分类列表28</li>
-    <li>分类列表29</li>
-    <li>分类列表30</li>
-    <li>分类列表31</li>
-    <li>分类列表32</li>
-    <li>分类列表33</li>
-    <li>分类列表34</li>
-    <li>分类列表35</li>
-    <li>分类列表36</li>
-    <li>分类列表37</li>
-    <li>分类列表38</li>
-    <li>分类列表39</li>
-    <li>分类列表40</li>
-    <li>分类列表41</li>
-    <li>分类列表42</li>
-    <li>分类列表43</li>
-    <li>分类列表44</li>
-    <li>分类列表45</li>
-    <li>分类列表46</li>
-    <li>分类列表47</li>
-    <li>分类列表48</li>
-    <li>分类列表49</li>
-    <li>分类列表50</li>
-    <li>分类列表51</li>
-    <li>分类列表52</li>
-    <li>分类列表53</li>
-    <li>分类列表54</li>
-    <li>分类列表55</li>
-    <li>分类列表56</li>
-    <li>分类列表57</li>
-    <li>分类列表58</li>
-    <li>分类列表59</li>
-    <li>分类列表60</li>
-  </ul>
-</div>
- 
+    <div class="category">
+        <category-tab></category-tab>
+        <category-content :categoryList="categoryList"></category-content>
+    </div>
 </template>
-
 <script>
-import BScroll from "better-scroll"
-  export default {
-    name: "Category",
-     data(){
-      return{
-          scroll:null
-      }
-    },
-    created(){
-      // new BScroll(document.querySelector('.content'))
-      // this.scroll= new BScroll(this.$refs.aaa,{
 
-      //  })
+//网络请求js模块
+import {getCategory} from '@/network/category.js'
+
+//组件
+import categoryTab from './childComps/cartgoryTab.vue' //顶部标题栏
+import categoryContent from './childComps/categoryContent.vue' //分类页主要区域
+export default {
+    name:'Category',
+    data() {
+        return{
+            categoryList:[],
+        }
     },
-    mounted(){
-      // 默认情况下BScroll 是不可以实时监听滚动位置
-      // propbe 侦测
-      this.scroll= new BScroll(document.querySelector('.wrapper'),{
-        // 默认值是 0 
-        // 明确的不侦测传入的是 1
-        // 手指滚动过程侦测，惯性过程不侦测 2
-        // 只要是滚动都侦测（包括滚动和惯性）3
-            probeType:2,
-            click:true
-        })
-        this.scroll.on('scroll',(position)=>{
-          console.log(position);
-        })
+    created() { 
+        getCategory().then((res)=>{
+            const {list} = res.data.category;
+            // console.log(data)
+            // console.log(list)
+            this.categoryList = list;
+        });
+    },
+    components:{
+        categoryTab,
+        categoryContent
     }
-  }
+}
 </script>
-
-<style scoped>
-    .wrapper{
-      height:400px;
-      background:blue;
-      overflow: hidden;
-      /* 原生的容易卡顿 */
-      /* overflow-y:scroll; */
+<style lang="less" scoped>
+.category{
+    .category-content{
+        margin-bottom: 1rem;
     }
+}
 </style>

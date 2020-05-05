@@ -1,18 +1,13 @@
-
-
 <template>
     <div class="goods">
-        <goods-list-item  v-for="(item,index) in goods" :key="index" :goodsItem="item">
+        <goods-list-item class="goods_item" v-for="(item,index) in goods" :key="index" :goodsItem="item">
         </goods-list-item>
     </div>
 </template>
 <script>
-import GoodsListItem from './GoodsListItem'
+import GoodsListItem from './GoodsListItem.vue'
 export default {
     name:'GoodsList',
-     components:{
-        GoodsListItem
-    },
     props:{
        goods:{
            type:Array,
@@ -21,19 +16,18 @@ export default {
            }
        }
     },
-    // updated() {
-    //     console.log(this.goods instanceof Object)
-    //     console.log(this.goods)
-    // },
-    
+    updated() {
+        console.log(this.goods instanceof Object)
+        console.log(this.goods)
+    },
+     components:{
+        GoodsListItem
+    }
 }
 </script>
-<style  scoped>
+<style lang="less" scoped>
     .goods{
         display: flex;
         flex-wrap: wrap;
-        justify-content:space-around;
-        padding:2px;
-
     }
 </style>
